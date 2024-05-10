@@ -285,6 +285,173 @@ int main()
 
 ==========================================================================
 
+kim cuong 
+
+#include<bits/stdc++.h>
+using namespace std;
+const int N=5e3+3;
+int  a[N][N], m, n;
+long long f[N][N];
+main()
+{
+    cin>>m>>n;
+    for (int i=1; i<=m; i++)
+        for (int j=1; j<=n; j++)
+            cin>>a[i][j];
+  f[1][1]=a[1][1];
+    for (int i=1; i<=m; i++)
+        for (int j=1; j<=n; j++)
+            f[i][j]=max({f[i-1][j] , f[i][j-1], f[i-1][j-1]})+ a[i][j];
+    cout<<f[m][n];
+
+}
+
++==================================================================================
+
+VIRUT
+
+#include<bits/stdc++.h>
+using namespace std;
+const int N=1e6+4,M=1e9+7;
+long long n,k,f[N];
+main()
+{
+    cin>>n>>k;
+    f[0]=n,f[1]=2*n;
+    for(int i=1;i<=k;i++)
+    {
+        f[i]=(n+f[i-1])%M;
+        n=(n+f[i])%M;
+    }
+    cout<<f[k];
+}
+======================================================================================
+HOI TRAI XUAN
+
+#include<bits/stdc++.h>
+#define ll long long
+#define sodu 123456789
+const int N= 5001;
+using namespace std;
+vector <int> a, b;
+int val[N], dp[N], n, s;
+ll ans;
+int getbit (int k, int x)
+{
+    return ((x>>k) &1);
+}
+void sub12()
+{
+    // chia tap val thanh 2 phan a va b
+    for (int i=1; i<=n; i++)
+        if (i<=n/2 ) a.push_back(val[i]);
+        else b.push_back(val[i]);
+    map <int, int> M;
+    int na= (1<<a.size());
+    int nb=(1<<b.size());
+    // tao tong tu day a
+    for (int x =0; x<na; x++)
+    {
+        ll sum=0;
+        for (int k=0; k<a.size(); k++)
+            if (getbit(k,x)==1) sum+=a[k];
+        if (sum<=s) M[sum]++;
+    }
+    // tao tong tu day b
+    for (int x =0; x<nb; x++)
+    {
+        ll sum=0;
+        for (int k=0; k<b.size(); k++)
+            if (getbit(k,x)==1) sum+=b[k];
+        if (sum<=s) ans= (ans+ M[s-sum]) % sodu;
+    }
+}
+void sub3()
+{
+    dp[0]=1;
+    for (int i=1; i<=n; i++)
+        for (int j=s; j>=val[i]; j--)
+            if (dp[j-val[i]]>0) dp[j]= (dp[j]+ dp[j-val[i]] )%sodu;
+    ans=dp[s];
+}
+int main()
+{
+    cin>>n>>s;
+    for (int i=1; i<=n; i++)
+        cin>>val[i];
+    if (n<=40) sub12();
+    else sub3();
+    cout<<ans;
+    return 0;
+}
+====================================================================
+
+CAI GHE 
+
+#include<bits/stdc++.h>
+using namespace std;
+const int N = 1e5+3;
+int a[N], f[N], b[N], n, ans1, ans2, ans;
+void nhap ()
+{
+    cin>>n;
+    for (int i=1; i<=n; i++)
+        cin>>a[i];
+
+}
+
+void sub12 ()
+{
+     for (int i=1; i<=n; i++)
+    {
+        f[i]=1;
+          for (int j=1; j<i; j++)
+                if (a[j]>a[i])   f[i]=max(f[i], f[j]+1);
+        ans2=max(ans2, f[i]);
+    }
+    cout<<ans2;
+}
+int tknp (int dau, int cuoi, int x)
+{
+    ans=0;
+    while (dau<=cuoi)
+    {
+        int giua=(dau+cuoi)/2;
+        if (a[b[giua]]>x)
+        {
+            ans=giua;
+            dau=giua+1;
+        }
+        else
+            cuoi=giua -1 ;
+    }
+    return b[ans];
+}
+void sub3()
+{
+
+int res;
+    res=1;
+    f[1]=1;
+    b[1]=1;
+    for (int i=2; i<=n; i++)
+    {
+        int jmax=tknp(1, f[res], a[i]); // tìm chỉ số tốt nhất có giá trị nhỏ hơn a[i] đang xét trong đoạn 1 đến độ dài hiện tại của dãy con tăng dài nhất
+        f[i]=f[jmax]+1;
+        b[f[i]]=i;// cập nhật lại vị trí tốt nhất cho mảng b. b[i] lưu chỉ số tốt nhất của phần tử nhỏ nhất của mảng  a, còn i trong mảng b là độ dài của dãy con tại vị trí b[i]
+        if (f[i]>f[res]) res=i;
+    }
+    cout<<f[res];
+}
+main()
+{
+    nhap();
+ if (n<=2000)  sub12();
+else sub3();
+}
+
+
+======================================================================================
 
 
 
