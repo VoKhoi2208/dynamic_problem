@@ -192,3 +192,99 @@ main()
 
 }
 
+====================================================================
+lo co
+
+
+#include <bits/stdc++.h>
+using namespace std;
+long long n,m;
+const int N=1e6+5;
+long long f[N];
+int main(){
+    cin>>n>>m;
+    f[1]=1;
+    f[2]=2;
+    f[3]=4;
+    for (int i=4; i<=n; i++)
+        f[i]=(f[i-1]+f[i-2]+f[i-3])% m;
+   cout<<f[n];
+return 0;
+}
+
+=================================================================
+
+
+lang hoa
+#include<bits/stdc++.h>
+using namespace std;
+int f[100005], a[100005], n, s;
+int main()
+{
+    cin>>n>>s;
+    for (int i=1; i<=n; i++)
+        cin>>a[i];
+    f[0]=1;
+    for (int i=1; i<=n; i++)
+        for (int j=s; j>=a[i]; j--)
+            if (f[j-a[i]]) f[j]+=f[j-a[i]];
+    if (f[s])    cout<<f[s]<<'\n';
+    else cout<<-1;
+    return 0;
+}
+
+
+====================================================================================
+
+
+day con tang
+
+#include<bits/stdc++.h>
+using namespace std;
+const int N=1e5+3;
+int a[N], f[N], b[N], ans, res, giua,n;
+int tknp (int dau, int cuoi, int x)
+{
+    ans=0;
+    while (dau<=cuoi)
+    {
+        giua=(dau+cuoi)/2;
+        if (a[b[giua]]<x)
+        {
+            ans=giua;
+            dau=giua+1;
+        }
+        else
+            cuoi=giua -1 ;
+    }
+    return b[ans];
+}
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    cin>>n;
+    for (int i=1; i<=n; i++)
+    {
+        cin>>a[i];
+    }
+    res=1;
+    f[1]=1;
+    b[1]=1;
+    for (int i=2; i<=n; i++)
+    {
+        int jmax=tknp(1, f[res], a[i]); 
+        f[i]=f[jmax]+1;
+        b[f[i]]=i;
+        if (f[i]>f[res]) res=i;
+    }
+    cout<<f[res];
+    return 0;
+}
+
+==========================================================================
+
+
+
+
